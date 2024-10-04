@@ -2,19 +2,44 @@
   import { Block } from "@gradio/atoms";
   import Column from "@gradio/column";
   import { Gradio } from "@gradio/utils";
+
+  interface CloseMessageStyle {
+    message_color?: string;
+    confirm_text?: string;
+    cancel_text?: string;
+    confirm_bg_color?: string;
+    cancel_bg_color?: string;
+    confirm_text_color?: string;
+    cancel_text_color?: string;
+    modal_bg_color?: string;
+  }
+
   export let elem_id = "";
   export let elem_classes: string[] = [];
   export let visible = false;
-  export let allow_user_close: boolean = false;
+  export let display_close_icon: boolean = false;
   export let close_on_esc: boolean;
   export let close_outer_click: boolean;
   export let close_message: string;
   export let bg_blur: number;
   export let width: number;
   export let height: number;
+  export let content_width_percent: number;
+  export let content_height_percent: number;
+  export let content_padding: string;
   export let gradio: Gradio<{
     blur: never;
   }>;
+  export let close_message_style: CloseMessageStyle = {
+    message_color: "var(--body-text-color)",
+    confirm_text: "Yes",
+    cancel_text: "No",
+    confirm_bg_color: "var(--primary-500)",
+    cancel_bg_color: "var(--neutral-500)",
+    confirm_text_color: "white",
+    cancel_text_color: "white",
+    modal_bg_color: "var(--background-fill-primary)",
+  };
 
   let element: HTMLElement | null = null;
   let inner_element: HTMLElement | null = null;
@@ -43,6 +68,13 @@
       close();
     }
   });
+
+  const getSizeStyle = () => {
+    const paddingStyle = content_padding ? `${content_padding}` : "0px";
+    const widthStyle = content_width_percent ? `${content_width_percent}%` : `100%`;
+    const heightStyle = content_height_percent ? `${content_height_percent}%` : `100%`;
+    return `width: ${widthStyle}; max-height: ${heightStyle}; padding: ${paddingStyle};`;
+  };
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -68,7 +100,7 @@
     style="width: {width}px; height: {height}px;"
   >
     <Block allow_overflow={false} elem_classes={["modal-block"]}>
-      {#if allow_user_close}
+      {#if display_close_icon}
         <div class="close" on:click={close}>
           <svg
             width="10"
@@ -94,7 +126,7 @@
           </svg>
         </div>
       {/if}
-      <div class="modal-content">
+      <div class="modal-content" style={getSizeStyle()}>
         <Column elem_classes={["centered-column"]}>
           <slot />
         </Column>
@@ -102,13 +134,31 @@
     </Block>
   </div>
   {#if showConfirmation}
-    <div class="confirmation-modal">
-      <div class="confirmation-content">
-        <h3>{close_message}</h3>
+    <div
+      class="confirmation-modal"
+    >
+      <div class="confirmation-content"
+      style="background-color: {close_message_style.modal_bg_color}"
+      >
+        <h3 style="color: {close_message_style.message_color}">{close_message}</h3>
         <br />
         <div class="confirmation-buttons">
-          <button class="yes-button" on:click={closeModal}>Yes</button>
-          <button class="no-button" on:click={cancelClose}>No</button>
+          <button
+            class="yes-button"
+            on:click={closeModal}
+            style="
+              background-color: {close_message_style.confirm_bg_color};
+              color: {close_message_style.confirm_text_color}
+            "
+            >{close_message_style.confirm_text}
+          </button>
+          <button class="no-button" on:click={cancelClose}
+            style="
+              background-color: {close_message_style.cancel_bg_color};
+              color: {close_message_style.cancel_text_color}
+            ">
+            {close_message_style.cancel_text}
+          </button>
         </div>
       </div>
     </div>
@@ -165,6 +215,11 @@
     max-height: calc(100% - var(--size-16));
     max-width: calc(100% - var(--size-16));
     overflow-y: hidden;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    align-items: start;
   }
   .close {
     position: absolute;
@@ -191,6 +246,10 @@
   .modal-content {
     padding-top: calc(24px + var(--block-label-margin) * 2);
     margin: 10px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-items: center;
   }
 
   .modal :global(.modal-block) {
@@ -203,6 +262,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 100%;
   }
   .hide {
     display: none;
