@@ -164,6 +164,18 @@ with gr.Blocks() as demo:
 
         show_btn9 = gr.Button("Show Modal 9")
 
+        # MODAL 10
+        # MODAL 10
+        gr.Markdown(
+        """
+        - Add `content_padding` configuration to control the spacing around modal content
+        - Padding can be specified using CSS-style values (e.g., "100px 50px" for vertical/horizontal padding)
+        - Please modify `content_padding` in the code to see the changes. current value is `100px`
+        """
+        )
+
+        show_btn10 = gr.Button("Show Modal 10")
+
     # MODAL lIST
 
     with modal_component(visible=False, display_close_icon=True) as modal:
@@ -288,6 +300,14 @@ with gr.Blocks() as demo:
         display_btn.click(fn=display_image, inputs=upload_img, outputs=output_img)
 
 
+    with modal_component(visible=False, width=500, height= 200, opacity_level=0, bg_blur=0) as modal10:
+        gr.Markdown("""# Opacity level Modal Example
+
+                    - Modal 10 Example
+                    - Opacity level set to 0
+                    - Background blur set to 0
+                    """)
+
     show_btn.click(lambda: modal_component(visible=True), None, modal)
     show_btn2.click(lambda: modal_component(visible=True), None, modal2)
     show_btn3.click(lambda: modal_component(visible=True), None, modal3)
@@ -317,6 +337,8 @@ with gr.Blocks() as demo:
     )
 
     show_btn9.click(lambda: modal_component(visible=True), None, modal9)
+    show_btn10.click(lambda: modal_component(visible=True), None, modal10)
+
 
 if __name__ == "__main__":
     demo.launch()

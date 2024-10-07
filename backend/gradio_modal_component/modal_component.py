@@ -45,6 +45,7 @@ class modal_component(BlockContext, metaclass=ComponentMeta):
         content_width_percent: int | None = None,
         content_height_percent: int | None = None,
         content_padding: str | None = None,
+        opacity_level: float | None = 0.4,
 
     ):
         """
@@ -72,6 +73,7 @@ class modal_component(BlockContext, metaclass=ComponentMeta):
             content_width_percent: Modify the width of the modal content as a percentage of the screen width.
             content_height_percent: Modify the height of the modal content as a percentage of the screen height.
             content_padding: Modify the padding of the modal content.
+            opacity_level: The level of background blur. Should be an integer between 0 and 1. Defaults to 0.4.
 
         """
         self.display_close_icon = display_close_icon
@@ -93,6 +95,7 @@ class modal_component(BlockContext, metaclass=ComponentMeta):
         self.content_width_percent = content_width_percent
         self.content_height_percent = content_height_percent
         self.content_padding = content_padding
+        self.opacity_level = opacity_level
 
         # Pass only the parameters that BlockContext expects
         BlockContext.__init__(

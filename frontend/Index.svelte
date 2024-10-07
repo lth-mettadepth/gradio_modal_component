@@ -27,6 +27,7 @@
   export let content_width_percent: number;
   export let content_height_percent: number;
   export let content_padding: string;
+  export let opacity_level: number;
   export let gradio: Gradio<{
     blur: never;
   }>;
@@ -84,7 +85,7 @@
   bind:this={element}
   class:hide={!visible}
   id={elem_id}
-  style="backdrop-filter: blur({bg_blur});"
+  style="backdrop-filter: blur({bg_blur}); background-color: rgba(0, 0, 0, {opacity_level});"
   on:click={(evt) => {
     if (
       close_outer_click &&

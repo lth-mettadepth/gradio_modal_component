@@ -3,7 +3,7 @@ import gradio as gr
 from app import demo as app
 import os
 
-_docs = {'modal_component': {'description': '', 'members': {'__init__': {'visible': {'type': 'bool', 'default': 'False', 'description': 'If False, modal will be hidden.'}, 'elem_id': {'type': 'str | None', 'default': 'None', 'description': 'An optional string that is assigned as the id of this component in the HTML DOM. Can be used for targeting CSS styles.'}, 'elem_classes': {'type': 'list[str] | str | None', 'default': 'None', 'description': 'An optional string or list of strings that are assigned as the class of this component in the HTML DOM. Can be used for targeting CSS styles.'}, 'display_close_icon': {'type': 'bool', 'default': 'True', 'description': None}, 'render': {'type': 'bool', 'default': 'True', 'description': 'If False, component will not render be rendered in the Blocks context. Should be used if the intention is to assign event listeners now but render the component later.'}, 'close_on_esc': {'type': 'bool', 'default': 'True', 'description': 'If True, allows closing the modal with the escape key. Defaults to True.'}, 'close_outer_click': {'type': 'bool', 'default': 'True', 'description': 'If True, allows closing the modal by clicking outside. Defaults to True.'}, 'close_message': {'type': 'str | None', 'default': 'None', 'description': 'The message to show when the user tries to close the modal. Defaults to None.'}, 'close_message_style': {'type': 'Dict | CloseMessageStyle | None', 'default': 'None', 'description': None}, 'bg_blur': {'type': 'int | None', 'default': '4', 'description': 'The percentage of background blur. Should be a float between 0 and 1. Defaults to None.'}, 'width': {'type': 'int | None', 'default': 'None', 'description': 'Modify the width of the modal.'}, 'height': {'type': 'int | None', 'default': 'None', 'description': 'Modify the height of the modal.'}, 'content_width_percent': {'type': 'int | None', 'default': 'None', 'description': 'Modify the width of the modal content as a percentage of the screen width.'}, 'content_height_percent': {'type': 'int | None', 'default': 'None', 'description': 'Modify the height of the modal content as a percentage of the screen height.'}, 'content_padding': {'type': 'str | None', 'default': 'None', 'description': 'Modify the padding of the modal content.'}}, 'postprocess': {}}, 'events': {'blur': {'type': None, 'default': None, 'description': 'This listener is triggered when the modal_component is unfocused/blurred.'}}}, '__meta__': {'additional_interfaces': {'CloseMessageStyle': {'source': '@dataclass\nclass CloseMessageStyle:\n    message_color: str = "var(--neutral-700)"\n    confirm_text: str = "Yes"\n    cancel_text: str = "No"\n    confirm_bg_color: str = "var(--primary-500)"\n    cancel_bg_color: str = "var(--neutral-500)"\n    confirm_text_color: str = "white"\n    cancel_text_color: str = "white"\n    modal_bg_color: str = "var(--background-fill-primary)"'}}}}
+_docs = {'modal_component': {'description': '', 'members': {'__init__': {'visible': {'type': 'bool', 'default': 'False', 'description': 'If False, modal will be hidden.'}, 'elem_id': {'type': 'str | None', 'default': 'None', 'description': 'An optional string that is assigned as the id of this component in the HTML DOM. Can be used for targeting CSS styles.'}, 'elem_classes': {'type': 'list[str] | str | None', 'default': 'None', 'description': 'An optional string or list of strings that are assigned as the class of this component in the HTML DOM. Can be used for targeting CSS styles.'}, 'display_close_icon': {'type': 'bool', 'default': 'True', 'description': None}, 'render': {'type': 'bool', 'default': 'True', 'description': 'If False, component will not render be rendered in the Blocks context. Should be used if the intention is to assign event listeners now but render the component later.'}, 'close_on_esc': {'type': 'bool', 'default': 'True', 'description': 'If True, allows closing the modal with the escape key. Defaults to True.'}, 'close_outer_click': {'type': 'bool', 'default': 'True', 'description': 'If True, allows closing the modal by clicking outside. Defaults to True.'}, 'close_message': {'type': 'str | None', 'default': 'None', 'description': 'The message to show when the user tries to close the modal. Defaults to None.'}, 'close_message_style': {'type': 'Dict | CloseMessageStyle | None', 'default': 'None', 'description': None}, 'bg_blur': {'type': 'int | None', 'default': '4', 'description': 'The percentage of background blur. Should be a float between 0 and 1. Defaults to None.'}, 'width': {'type': 'int | None', 'default': 'None', 'description': 'Modify the width of the modal.'}, 'height': {'type': 'int | None', 'default': 'None', 'description': 'Modify the height of the modal.'}, 'content_width_percent': {'type': 'int | None', 'default': 'None', 'description': 'Modify the width of the modal content as a percentage of the screen width.'}, 'content_height_percent': {'type': 'int | None', 'default': 'None', 'description': 'Modify the height of the modal content as a percentage of the screen height.'}, 'content_padding': {'type': 'str | None', 'default': 'None', 'description': 'Modify the padding of the modal content.'}, 'opacity_level': {'type': 'float | None', 'default': '0.4', 'description': 'The level of background blur. Should be an integer between 0 and 1. Defaults to 0.4.'}}, 'postprocess': {}}, 'events': {'blur': {'type': None, 'default': None, 'description': 'This listener is triggered when the modal_component is unfocused/blurred.'}}}, '__meta__': {'additional_interfaces': {'CloseMessageStyle': {'source': '@dataclass\nclass CloseMessageStyle:\n    message_color: str = "var(--neutral-700)"\n    confirm_text: str = "Yes"\n    cancel_text: str = "No"\n    confirm_bg_color: str = "var(--primary-500)"\n    cancel_bg_color: str = "var(--neutral-500)"\n    confirm_text_color: str = "white"\n    cancel_text_color: str = "white"\n    modal_bg_color: str = "var(--background-fill-primary)"'}}}}
 
 abs_path = os.path.join(os.path.dirname(__file__), "css.css")
 
@@ -204,6 +204,18 @@ with gr.Blocks() as demo:
 
         show_btn9 = gr.Button("Show Modal 9")
 
+        # MODAL 10
+        # MODAL 10
+        gr.Markdown(
+        \"\"\"
+        - Add `content_padding` configuration to control the spacing around modal content
+        - Padding can be specified using CSS-style values (e.g., "100px 50px" for vertical/horizontal padding)
+        - Please modify `content_padding` in the code to see the changes. current value is `100px`
+        \"\"\"
+        )
+
+        show_btn10 = gr.Button("Show Modal 10")
+
     # MODAL lIST
 
     with modal_component(visible=False, display_close_icon=True) as modal:
@@ -328,6 +340,14 @@ with gr.Blocks() as demo:
         display_btn.click(fn=display_image, inputs=upload_img, outputs=output_img)
 
 
+    with modal_component(visible=False, width=500, height= 200, opacity_level=0, bg_blur=0) as modal10:
+        gr.Markdown(\"\"\"# Opacity level Modal Example
+
+                    - Modal 10 Example
+                    - Opacity level set to 0
+                    - Background blur set to 0
+                    \"\"\")
+
     show_btn.click(lambda: modal_component(visible=True), None, modal)
     show_btn2.click(lambda: modal_component(visible=True), None, modal2)
     show_btn3.click(lambda: modal_component(visible=True), None, modal3)
@@ -355,9 +375,10 @@ with gr.Blocks() as demo:
         inputs=[width_input8, height_input8, width_percent8, height_percent8],
         outputs=modal8,
     )
-    # show_btn8.click(lambda: modal_component(visible=True), None, modal8)
 
     show_btn9.click(lambda: modal_component(visible=True), None, modal9)
+    show_btn10.click(lambda: modal_component(visible=True), None, modal10)
+
 
 if __name__ == "__main__":
     demo.launch()
