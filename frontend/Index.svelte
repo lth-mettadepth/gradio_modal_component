@@ -76,6 +76,21 @@
     const heightStyle = content_height_percent ? `${content_height_percent}%` : `100%`;
     return `width: ${widthStyle}; max-height: ${heightStyle}; padding: ${paddingStyle};`;
   };
+
+  let blurBg = () => {
+    return `
+      backdrop-filter: blur(${bg_blur}px);
+      -webkit-backdrop-filter: blur(${bg_blur}px);
+    `;
+  }
+  let fallbackBlur = () => {
+    return `
+      background-color: rgba(0, 0, 0, ${opacity_level});
+      @supports not (backdrop-filter: blur(${bg_blur}px)) {
+        background-color: rgba(0, 0, 0, ${opacity_level});
+      }
+    `;
+  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -85,7 +100,7 @@
   bind:this={element}
   class:hide={!visible}
   id={elem_id}
-  style="backdrop-filter: blur({bg_blur}); background-color: rgba(0, 0, 0, {opacity_level});"
+  style="{blurBg()} {fallbackBlur()}"
   on:click={(evt) => {
     if (
       close_outer_click &&
@@ -254,6 +269,8 @@
   }
 
   .modal :global(.modal-block) {
+    display: flex;
+    justify-content: center;
     max-height: 100%;
     overflow-y: auto !important;
   }

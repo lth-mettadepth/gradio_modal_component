@@ -340,7 +340,7 @@ with gr.Blocks() as demo:
         display_btn.click(fn=display_image, inputs=upload_img, outputs=output_img)
 
 
-    with modal_component(visible=False, width=500, height= 200, opacity_level=0, bg_blur=0) as modal10:
+    with modal_component(visible=False, width=500, height= 200, opacity_level=0.4, bg_blur=0) as modal10:
         gr.Markdown(\"\"\"# Opacity level Modal Example
 
                     - Modal 10 Example
